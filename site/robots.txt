@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://calyxstudio.ir/sitemap-index.xml

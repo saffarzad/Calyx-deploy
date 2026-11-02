@@ -1,0 +1,441 @@
+{
+ "tenant": {
+  "slug": "demo",
+  "name": "کافه نمونه",
+  "tagline": "قهوهٔ تازه، دسر خانگی",
+  "demo": true,
+  "tables": 12,
+  "theme": {
+   "primary": "#123A3A",
+   "accent": "#F05B49",
+   "bg": "#F4F0E8",
+   "surface": "#FFFFFF",
+   "text": "#141517",
+   "videoBg": "#efe9df"
+  }
+ },
+ "categories": [
+  {
+   "id": "hot",
+   "title": "قهوهٔ داغ"
+  },
+  {
+   "id": "cold",
+   "title": "نوشیدنی سرد"
+  },
+  {
+   "id": "dessert",
+   "title": "کیک و دسر"
+  },
+  {
+   "id": "food",
+   "title": "غذا"
+  }
+ ],
+ "items": [
+  {
+   "id": "espresso",
+   "categoryId": "hot",
+   "title": "اسپرسو",
+   "description": "یک شات غلیظ با کرمای طلایی.",
+   "price": 95000,
+   "builder": {
+    "groups": [
+     {
+      "id": "shot",
+      "title": "شات",
+      "type": "single",
+      "options": [
+       {
+        "id": "single",
+        "title": "تک‌شات",
+        "price": 0,
+        "default": true
+       },
+       {
+        "id": "double",
+        "title": "دوبل",
+        "price": 35000
+       }
+      ]
+     }
+    ]
+   },
+   "available": true,
+   "sort": 0,
+   "media": {
+    "poster": "assets/items/espresso/poster.webp",
+    "webm": "assets/items/espresso/spin.webm",
+    "mp4": "assets/items/espresso/spin.mp4",
+    "glb": "assets/items/espresso/model.glb"
+   }
+  },
+  {
+   "id": "latte",
+   "categoryId": "hot",
+   "title": "لاته",
+   "description": "اسپرسو با شیر بخارداده و لاته‌آرت.",
+   "price": 145000,
+   "builder": {
+    "groups": [
+     {
+      "id": "milk",
+      "title": "نوع شیر",
+      "type": "single",
+      "options": [
+       {
+        "id": "milk-regular",
+        "title": "شیر معمولی",
+        "price": 0,
+        "default": true
+       },
+       {
+        "id": "milk-oat",
+        "title": "شیر جو دوسر",
+        "price": 30000
+       },
+       {
+        "id": "milk-almond",
+        "title": "شیر بادام",
+        "price": 35000
+       }
+      ]
+     },
+     {
+      "id": "extra",
+      "title": "افزودنی",
+      "type": "multi",
+      "options": [
+       {
+        "id": "extra-shot",
+        "title": "شات اضافه",
+        "price": 35000
+       },
+       {
+        "id": "syrup-vanilla",
+        "title": "سیروپ وانیل",
+        "price": 20000
+       },
+       {
+        "id": "syrup-caramel",
+        "title": "سیروپ کارامل",
+        "price": 20000
+       }
+      ]
+     }
+    ]
+   },
+   "available": true,
+   "sort": 1,
+   "media": {
+    "poster": "assets/items/latte/poster.webp",
+    "webm": "assets/items/latte/spin.webm",
+    "mp4": "assets/items/latte/spin.mp4",
+    "glb": "assets/items/latte/model.glb"
+   }
+  },
+  {
+   "id": "cappuccino",
+   "categoryId": "hot",
+   "title": "کاپوچینو",
+   "description": "اسپرسو، شیر و فوم ضخیم با پودر کاکائو.",
+   "price": 140000,
+   "available": true,
+   "sort": 2,
+   "media": {
+    "poster": "assets/items/cappuccino/poster.webp",
+    "webm": "assets/items/cappuccino/spin.webm",
+    "mp4": "assets/items/cappuccino/spin.mp4",
+    "glb": "assets/items/cappuccino/model.glb"
+   }
+  },
+  {
+   "id": "americano",
+   "categoryId": "hot",
+   "title": "آمریکانو",
+   "description": "اسپرسو رقیق‌شده با آب داغ.",
+   "price": 110000,
+   "builder": {
+    "groups": [
+     {
+      "id": "shot",
+      "title": "غلظت",
+      "type": "single",
+      "options": [
+       {
+        "id": "regular",
+        "title": "معمولی",
+        "price": 0,
+        "default": true
+       },
+       {
+        "id": "strong",
+        "title": "شات اضافه",
+        "price": 35000
+       }
+      ]
+     }
+    ]
+   },
+   "available": true,
+   "sort": 3,
+   "media": {
+    "poster": "assets/items/americano/poster.webp",
+    "webm": "assets/items/americano/spin.webm",
+    "mp4": "assets/items/americano/spin.mp4",
+    "glb": "assets/items/americano/model.glb"
+   }
+  },
+  {
+   "id": "chocolate-shake",
+   "categoryId": "cold",
+   "title": "شیک شکلات",
+   "description": "شیک شکلات غلیظ؛ تاپینگش را خودت انتخاب کن.",
+   "price": 210000,
+   "featured": true,
+   "tag": "خودت بسازش",
+   "builder": {
+    "groups": [
+     {
+      "id": "topping",
+      "title": "تاپینگ",
+      "type": "multi",
+      "options": [
+       {
+        "id": "cream",
+        "title": "خامه",
+        "price": 25000,
+        "default": true,
+        "part": "whipped_cream"
+       },
+       {
+        "id": "choco",
+        "title": "سس شکلات",
+        "price": 15000,
+        "default": true,
+        "part": [
+         "choco_sauce",
+         "choco_drips"
+        ]
+       },
+       {
+        "id": "caramel",
+        "title": "سس کارامل",
+        "price": 15000,
+        "part": "caramel_sauce",
+        "requires": "cream"
+       },
+       {
+        "id": "sprinkles",
+        "title": "اسپرینکل",
+        "price": 10000,
+        "part": "sprinkles",
+        "requires": "cream"
+       },
+       {
+        "id": "cherry",
+        "title": "گیلاس",
+        "price": 10000,
+        "default": true,
+        "part": "cherry",
+        "requires": "cream"
+       },
+       {
+        "id": "cookie",
+        "title": "کوکی",
+        "price": 20000,
+        "part": "cookie",
+        "requires": "cream"
+       }
+      ]
+     },
+     {
+      "id": "extra",
+      "title": "افزودنی",
+      "type": "multi",
+      "options": [
+       {
+        "id": "shake-shot",
+        "title": "شات اسپرسو",
+        "price": 35000
+       }
+      ]
+     }
+    ]
+   },
+   "available": true,
+   "sort": 4,
+   "media": {
+    "poster": "assets/items/chocolate-shake/poster.webp",
+    "webm": "assets/items/chocolate-shake/spin.webm",
+    "mp4": "assets/items/chocolate-shake/spin.mp4",
+    "glb": "assets/items/chocolate-shake/model.glb"
+   }
+  },
+  {
+   "id": "iced-latte",
+   "categoryId": "cold",
+   "title": "آیس لاته",
+   "description": "اسپرسو روی شیر سرد و یخ.",
+   "price": 165000,
+   "builder": {
+    "groups": [
+     {
+      "id": "milk",
+      "title": "نوع شیر",
+      "type": "single",
+      "options": [
+       {
+        "id": "milk-regular",
+        "title": "شیر معمولی",
+        "price": 0,
+        "default": true
+       },
+       {
+        "id": "milk-oat",
+        "title": "شیر جو دوسر",
+        "price": 30000
+       }
+      ]
+     }
+    ]
+   },
+   "available": true,
+   "sort": 5,
+   "media": {
+    "poster": "assets/items/iced-latte/poster.webp",
+    "webm": "assets/items/iced-latte/spin.webm",
+    "mp4": "assets/items/iced-latte/spin.mp4",
+    "glb": "assets/items/iced-latte/model.glb"
+   }
+  },
+  {
+   "id": "cheesecake",
+   "categoryId": "dessert",
+   "title": "چیزکیک تمشک",
+   "description": "چیزکیک نیویورکی با سس و تمشک تازه.",
+   "price": 175000,
+   "featured": true,
+   "available": true,
+   "sort": 6,
+   "media": {
+    "poster": "assets/items/cheesecake/poster.webp",
+    "webm": "assets/items/cheesecake/spin.webm",
+    "mp4": "assets/items/cheesecake/spin.mp4",
+    "glb": "assets/items/cheesecake/model.glb"
+   }
+  },
+  {
+   "id": "chocolate-cake",
+   "categoryId": "dessert",
+   "title": "کیک شکلاتی",
+   "description": "سه لایه کیک و گاناش شکلات تلخ.",
+   "price": 160000,
+   "available": true,
+   "sort": 7,
+   "media": {
+    "poster": "assets/items/chocolate-cake/poster.webp",
+    "webm": "assets/items/chocolate-cake/spin.webm",
+    "mp4": "assets/items/chocolate-cake/spin.mp4",
+    "glb": "assets/items/chocolate-cake/model.glb"
+   }
+  },
+  {
+   "id": "macarons",
+   "categoryId": "dessert",
+   "title": "ماکارون (۳ عدد)",
+   "description": "پسته، تمشک و کارامل نمکی.",
+   "price": 135000,
+   "available": true,
+   "sort": 8,
+   "media": {
+    "poster": "assets/items/macarons/poster.webp",
+    "webm": "assets/items/macarons/spin.webm",
+    "mp4": "assets/items/macarons/spin.mp4",
+    "glb": "assets/items/macarons/model.glb"
+   }
+  },
+  {
+   "id": "croissant",
+   "categoryId": "dessert",
+   "title": "کروسان کره‌ای",
+   "description": "لایه‌لایه و ترد، تازه از فر.",
+   "price": 95000,
+   "available": true,
+   "sort": 9,
+   "media": {
+    "poster": "assets/items/croissant/poster.webp",
+    "webm": "assets/items/croissant/spin.webm",
+    "mp4": "assets/items/croissant/spin.mp4",
+    "glb": "assets/items/croissant/model.glb"
+   }
+  },
+  {
+   "id": "burger",
+   "categoryId": "food",
+   "title": "برگر کلاسیک",
+   "description": "گوشت گریل‌شده، پنیر چدار و سبزیجات تازه؛ لایه‌هایش را خودت بچین.",
+   "price": 340000,
+   "featured": true,
+   "tag": "خودت بسازش",
+   "builder": {
+    "groups": [
+     {
+      "id": "layers",
+      "title": "لایه‌ها",
+      "type": "multi",
+      "options": [
+       {
+        "id": "cheese",
+        "title": "پنیر چدار",
+        "price": 30000,
+        "default": true,
+        "part": "cheese"
+       },
+       {
+        "id": "lettuce",
+        "title": "کاهو",
+        "price": 0,
+        "default": true,
+        "part": "lettuce"
+       },
+       {
+        "id": "tomato",
+        "title": "گوجه",
+        "price": 0,
+        "default": true,
+        "part": "tomato"
+       },
+       {
+        "id": "onion",
+        "title": "پیاز",
+        "price": 0,
+        "part": "onion"
+       },
+       {
+        "id": "patty-extra",
+        "title": "گوشت اضافه",
+        "price": 120000,
+        "part": "patty_extra"
+       },
+       {
+        "id": "cheese-extra",
+        "title": "پنیر اضافه",
+        "price": 30000,
+        "part": "cheese_extra"
+       }
+      ]
+     }
+    ]
+   },
+   "available": true,
+   "sort": 10,
+   "media": {
+    "poster": "assets/items/burger/poster.webp",
+    "webm": "assets/items/burger/spin.webm",
+    "mp4": "assets/items/burger/spin.mp4",
+    "glb": "assets/items/burger/model.glb"
+   }
+  }
+ ]
+}
