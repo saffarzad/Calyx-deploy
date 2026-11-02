@@ -371,12 +371,29 @@
    }
   },
   {
+   "id": "burger-classic",
+   "categoryId": "food",
+   "title": "چیزبرگر کلاسیک",
+   "description": "گوشت گریل‌شده، پنیر چدار، سس مخصوص، خیارشور، گوجه، پیاز و کاهو در نان کنجدی.",
+   "price": 360000,
+   "featured": 1,
+   "tag": "مدل واقعی",
+   "available": true,
+   "media": {
+    "poster": "assets/items/burger-classic/poster.webp",
+    "webm": "assets/items/burger-classic/spin.webm",
+    "mp4": "assets/items/burger-classic/spin.mp4",
+    "glb": "assets/items/burger-classic/model.glb"
+   },
+   "sort": 10
+  },
+  {
    "id": "burger",
    "categoryId": "food",
-   "title": "برگر کلاسیک",
-   "description": "گوشت گریل‌شده، پنیر چدار و سبزیجات تازه؛ لایه‌هایش را خودت بچین.",
+   "title": "برگر به سلیقهٔ شما",
+   "description": "لایه‌های برگر را خودت انتخاب کن و همان لحظه روی مدل ببین.",
    "price": 340000,
-   "featured": true,
+   "featured": false,
    "tag": "خودت بسازش",
    "builder": {
     "groups": [
@@ -429,7 +446,7 @@
     ]
    },
    "available": true,
-   "sort": 10,
+   "sort": 11,
    "media": {
     "poster": "assets/items/burger/poster.webp",
     "webm": "assets/items/burger/spin.webm",
