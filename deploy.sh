@@ -11,7 +11,7 @@ NEW=$(curl -fsSL "https://raw.githubusercontent.com/$REPO/main/VERSION") || exit
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 curl -fsSL "https://codeload.github.com/$REPO/tar.gz/refs/heads/main" | tar -xz -C "$TMP"
-SRC="$TMP/calyx-deploy-main/site"
+SRC=$(echo "$TMP"/*/site)
 [ -f "$SRC/index.html" ] || exit 1
 # پوشه‌هایی که فایل‌های هش‌دار دارند کامل جایگزین می‌شوند تا فایل‌های کهنه جمع نشوند
 rm -rf "$DEST/_astro" "$DEST/menu-demo"
