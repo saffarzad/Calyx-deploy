@@ -17,7 +17,7 @@ DirectoryIndex index.html
 
 # فایل‌های هش‌دار برنامه یک سال کش می‌شوند؛ صفحه‌ها همیشه تازه
 <IfModule mod_headers.c>
-  <FilesMatch "\.(html)$">
+  <FilesMatch "\.(html|json)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
   <If "%{REQUEST_URI} =~ m#^/(_astro|menu-demo/app)/#">
