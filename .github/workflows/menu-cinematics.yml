@@ -8,40 +8,24 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - slug: burger-classic
-            start: '0.45'
-            elev: '0.3'
-            margin: '1.18'
-            sss: '0.12'
-            fstop: '7.1'
-          - slug: chocolate-cake
-            start: '-0.588'
-            elev: '0.55'
-            margin: '1.1'
-            sss: '0.035'
-            fstop: '7.1'
-          - slug: cheesecake
-            start: '-0.588'
-            elev: '0.55'
-            margin: '1.1'
-            sss: '0.06'
-            fstop: '7.1'
-          - slug: pizza
-            start: '-0.245'
-            elev: '0.95'
-            margin: '1.02'
-            sss: '0.06'
-            fstop: '8'
+        part:
+          - { id: 0, range: '0-31' }
+          - { id: 1, range: '32-62' }
+          - { id: 2, range: '63-93' }
+          - { id: 3, range: '94-124' }
+        model:
+          - { slug: burger-classic, start: '0.45', elev: '0.3', margin: '1.18', sss: '0.12', fstop: '7.1' }
+          - { slug: chocolate-cake, start: '-0.588', elev: '0.55', margin: '1.1', sss: '0.035', fstop: '7.1' }
+          - { slug: cheesecake, start: '-0.588', elev: '0.55', margin: '1.1', sss: '0.06', fstop: '7.1' }
+          - { slug: pizza, start: '-0.245', elev: '0.95', margin: '1.02', sss: '0.06', fstop: '8' }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+        with: { node-version: '22' }
       - name: Prepare renderer
         run: |
           curl --fail --location --retry 3 https://download.blender.org/release/Blender4.5/blender-4.5.9-linux-x64.tar.xz -o /tmp/blender.tar.xz
@@ -49,12 +33,38 @@ jobs:
           cd cinematic-render
           npm install --no-audit --no-fund @gltf-transform/core@4.5.1 @gltf-transform/functions@4.5.1 @gltf-transform/extensions@4.5.1 meshoptimizer sharp
       - name: Decode model
-        run: node cinematic-render/prepare.mjs '${{ matrix.slug }}'
+        run: node cinematic-render/prepare.mjs '${{ matrix.model.slug }}'
       - name: Render studio motion
         run: |
-          /tmp/blender-4.5.9-linux-x64/blender --background --python cinematic-render/render.py -- "$PWD/cinematic-render/model.glb" "$PWD/rendered" --frames 125 --size 720 --samples 48 --start '${{ matrix.start }}' --sway 0 --elev '${{ matrix.elev }}' --margin '${{ matrix.margin }}' --sss '${{ matrix.sss }}' --fstop '${{ matrix.fstop }}'
+          /tmp/blender-4.5.9-linux-x64/blender --background --python cinematic-render/render.py -- "$PWD/cinematic-render/model.glb" "$PWD/rendered" --frames 125 --range '${{ matrix.part.range }}' --size 720 --samples 48 --start '${{ matrix.model.start }}' --sway 0 --elev '${{ matrix.model.elev }}' --margin '${{ matrix.model.margin }}' --sss '${{ matrix.model.sss }}' --fstop '${{ matrix.model.fstop }}'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rotation-raw-${{ matrix.model.slug }}-${{ matrix.part.id }}
+          path: rendered/*.png
+          retention-days: 1
+          if-no-files-found: error
+  package:
+    needs: render
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        slug: [burger-classic, chocolate-cake, cheesecake, pizza]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: rotation-raw-${{ matrix.slug }}-*
+          merge-multiple: true
+          path: rendered
       - name: Package and verify native rotation
         run: |
+          cd cinematic-render
+          npm install --no-audit --no-fund sharp
+          cd ..
           command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y ffmpeg)
           node cinematic-render/package.mjs
       - uses: actions/upload-artifact@v4
