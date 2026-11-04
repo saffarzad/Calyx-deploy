@@ -1,0 +1,55 @@
+name: Render menu cinematic previews
+on:
+  push:
+    branches: [codex/render-menu-cinematics]
+    paths: ['cinematic-render/**', '.github/workflows/menu-cinematics.yml']
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - slug: chocolate-cake
+            start: '-0.588'
+            elev: '0.55'
+            margin: '1.1'
+            sss: '0.035'
+            fstop: '7.1'
+          - slug: cheesecake
+            start: '-0.588'
+            elev: '0.55'
+            margin: '1.1'
+            sss: '0.06'
+            fstop: '7.1'
+          - slug: pizza
+            start: '-0.245'
+            elev: '0.95'
+            margin: '1.02'
+            sss: '0.06'
+            fstop: '8'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare renderer
+        run: |
+          curl --fail --location --retry 3 https://download.blender.org/release/Blender4.5/blender-4.5.9-linux-x64.tar.xz -o /tmp/blender.tar.xz
+          tar -xf /tmp/blender.tar.xz -C /tmp
+          cd cinematic-render
+          npm install --no-audit --no-fund @gltf-transform/core@4.5.1 @gltf-transform/functions@4.5.1 @gltf-transform/extensions@4.5.1 meshoptimizer sharp
+      - name: Decode model
+        run: node cinematic-render/prepare.mjs '${{ matrix.slug }}'
+      - name: Render studio motion
+        run: |
+          /tmp/blender-4.5.9-linux-x64/blender --background --python cinematic-render/render.py -- "$PWD/cinematic-render/model.glb" "$PWD/rendered" --frames 63 --size 720 --samples 48 --start '${{ matrix.start }}' --sway 22 --elev '${{ matrix.elev }}' --margin '${{ matrix.margin }}' --sss '${{ matrix.sss }}' --fstop '${{ matrix.fstop }}'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cinematic-${{ matrix.slug }}
+          path: rendered/*.png
+          retention-days: 3
+          if-no-files-found: error

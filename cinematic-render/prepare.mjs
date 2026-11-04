@@ -1,0 +1,14 @@
+import {NodeIO} from '@gltf-transform/core';
+import {ALL_EXTENSIONS} from '@gltf-transform/extensions';
+import {textureCompress} from '@gltf-transform/functions';
+import {MeshoptDecoder} from 'meshoptimizer';
+import sharp from 'sharp';
+const slug=process.argv[2];
+if(!['chocolate-cake','cheesecake','pizza'].includes(slug))throw Error('Unknown item');
+await MeshoptDecoder.ready;
+const io=new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({'meshopt.decoder':MeshoptDecoder});
+const doc=await io.read(`site/menu-demo/assets/items/${slug}/model.glb`);
+await doc.transform(textureCompress({encoder:sharp,targetFormat:'jpeg',resize:[2048,2048],quality:94}));
+for(const ext of doc.getRoot().listExtensionsUsed())if(['EXT_meshopt_compression','EXT_texture_webp'].includes(ext.extensionName))ext.dispose();
+for(const mat of doc.getRoot().listMaterials())mat.setMetallicFactor(0);
+await io.write('cinematic-render/model.glb',doc);
