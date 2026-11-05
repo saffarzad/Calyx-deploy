@@ -76,4 +76,5 @@ main() {
   printf '%s deployed %s\n' "$(date '+%F %T')" "$new" >> "$state/log"
 }
 
-if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then main "$@"; fi
+# Cron downloads this script into `bash` on stdin; BASH_SOURCE is unset in that mode.
+if [[ -z "${BASH_SOURCE[0]:-}" || "${BASH_SOURCE[0]}" == "$0" ]]; then main "$@"; fi
