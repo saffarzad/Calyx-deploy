@@ -12,7 +12,10 @@ atomic_file() {
 }
 
 publish_tree() {
-  local source_dir="$1" target_dir="$2" file phase
+  local source_dir="$1" target_dir="$2" file phase listing
+  # Jailed cPanel shells may not expose /dev/fd, so avoid process substitution.
+  listing=$(mktemp "${CALYX_RUN_TMP:-${TMPDIR:-/tmp}}/calyx-files.XXXXXX") || return 1
+  if ! find "$source_dir" -type f -print0 > "$listing"; then rm -f -- "$listing"; return 1; fi
   # Assets first, then manifests/data, then pages. Retain old hashed assets for open tabs.
   for phase in assets data pages; do
     while IFS= read -r -d '' file; do
@@ -21,9 +24,10 @@ publish_tree() {
         *.json) [ "$phase" = data ] || continue ;;
         *) [ "$phase" = assets ] || continue ;;
       esac
-      atomic_file "$file" "$target_dir/${file#"$source_dir"/}" || return 1
-    done < <(find "$source_dir" -type f -print0)
+      if ! atomic_file "$file" "$target_dir/${file#"$source_dir"/}"; then rm -f -- "$listing"; return 1; fi
+    done < "$listing"
   done
+  rm -f -- "$listing"
 }
 
 cleanup_release() {
