@@ -1,0 +1,9 @@
+{
+  "latte": {"start": 0.0, "elev": 0.57, "margin": 1.16, "sss": 0.03},
+  "cappuccino": {"start": 0.0, "elev": 0.53, "margin": 1.16, "sss": 0.03},
+  "americano": {"start": 0.0, "elev": 0.49, "margin": 1.16, "sss": 0.01},
+  "iced-latte": {"start": 0.0, "elev": 0.27, "margin": 1.12, "sss": 0},
+  "macarons": {"start": 0.0, "elev": 0.53, "margin": 1.14, "sss": 0.08},
+  "croissant": {"start": 0.0, "elev": 0.47, "margin": 1.13, "sss": 0.08},
+  "drink-build": {"start": 0.0, "elev": 0.27, "margin": 1.12, "sss": 0}
+}
