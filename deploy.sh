@@ -42,7 +42,8 @@ log_line() { local dir="$1"; shift; printf '%s %s\n' "$(date '+%F %T')" "$*" >> 
 # Every file is checked against the manifest before anything is installed, so a stale CDN copy fails safely
 # and the next Cron run retries.
 fetch_changed() {
-  local base="$1" manifest="$2" destination="$3" out="$4" hash path target got count=0
+  local base="$1" manifest="$2" destination="$3" out="$4" cache="${5:-}" hash path target got count=0
+  [ -z "$cache" ] || mkdir -p "$cache" || cache=''
   command -v sha256sum >/dev/null 2>&1 || return 1
   while read -r hash path; do
     [ -n "$hash" ] && [ -n "$path" ] || continue
@@ -53,9 +54,15 @@ fetch_changed() {
       [ "${got%% *}" = "$hash" ] && continue
     fi
     mkdir -p "$(dirname "$out/$path")" || return 1
-    curl -fsSL --retry 3 --connect-timeout 15 --max-time 300 -H 'Cache-Control: no-cache' "$base/site/$path" -o "$out/$path" || return 1
+    # Verified downloads are kept by hash, so a run cut short by the host resumes instead of starting over.
+    if [ -n "$cache" ] && [ -f "$cache/$hash" ]; then
+      cp -- "$cache/$hash" "$out/$path" || return 1
+    else
+      curl -fsSL --retry 3 --connect-timeout 15 --max-time 300 -H 'Cache-Control: no-cache' "$base/site/$path" -o "$out/$path" || return 1
+    fi
     got=$(sha256sum < "$out/$path") || return 1
-    [ "${got%% *}" = "$hash" ] || return 1
+    [ "${got%% *}" = "$hash" ] || { [ -n "$cache" ] && rm -f -- "$cache/$hash"; return 1; }
+    [ -z "$cache" ] || [ -f "$cache/$hash" ] || cp -- "$out/$path" "$cache/$hash" || true
     count=$((count + 1))
   done < "$manifest"
   printf '%s' "$count"
@@ -103,7 +110,7 @@ main() {
     && [ -s "$CALYX_RUN_TMP/MANIFEST" ]; then
     mkdir -p "$CALYX_RUN_TMP/inc/site"
     # A failed or mismatched file leaves the live site untouched; the next run retries.
-    changed=$(fetch_changed "$base" "$CALYX_RUN_TMP/MANIFEST" "$destination" "$CALYX_RUN_TMP/inc/site") || { log_line "$state" "incremental $new download failed"; return 1; }
+    changed=$(fetch_changed "$base" "$CALYX_RUN_TMP/MANIFEST" "$destination" "$CALYX_RUN_TMP/inc/site" "$state/cache") || { log_line "$state" "incremental $new download failed"; return 1; }
     printf '%s\n' "$new" > "$CALYX_RUN_TMP/inc/VERSION"
     source_dir="$CALYX_RUN_TMP/inc/site"
     for f in index.html menu-demo/index.html menu-demo/data/demo.json; do
@@ -111,6 +118,7 @@ main() {
     done
     publish_tree "$source_dir" "$destination" || { log_line "$state" "incremental $new install failed"; return 1; }
     atomic_file "$CALYX_RUN_TMP/inc/VERSION" "$state/version" || return 1
+    rm -rf -- "$state/cache"
     log_line "$state" "deployed $(head -1 "$CALYX_RUN_TMP/inc/VERSION") ($changed files)"
     return 0
   fi
