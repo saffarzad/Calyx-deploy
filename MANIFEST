@@ -4177,7 +4177,7 @@ b1dda5a2d0dd226b12325b2f17b28d803869ce0388c2fa8ec5b90c1f0316fad8  menu-demo/asse
 35c84a987f6d4bd8f1ce41b2cd1534a1805a11804370faaf7675b9065122031e  menu-demo/assets/items/roast-chicken/volume-cinema/poster.webp
 b00da59ce872a0359ce74e0c7718fbe5a5503eadb67038da21001e56cb518062  menu-demo/assets/items/roast-chicken/volume-cinema/spin.mp4
 7bb63d7a49f3f8d5dc06fedde06b91cfb91bb5b959d113a4def7f7287826ae90  menu-demo/assets/items/roast-chicken/volume-cinema/spin.webm
-a2b531ff152c215140f6886cec42abbd6d99b2bb2e23710736d166234ce10329  menu-demo/assets/items/salad-build/kit.glb
+0778ae3c363785d58e8f73010ef7ce2114c92c17345afc1a99e0c361b7f78424  menu-demo/assets/items/salad-build/kit.glb
 cadb64c371b62130179f5b118243c9fa549c65a39221ef68d0e5be3025dd1c35  menu-demo/assets/items/sundae/atlas-hi.webp
 c7403474a24236554eb4095807b078fe22e3a62d1497c9c024799b701d6bbd0a  menu-demo/assets/items/sundae/atlas-lo.webp
 fa3707603f555fc8a1ee7d75aa47725f2702edbdf1c815669cce14b619111d29  menu-demo/assets/items/sundae/atlas-poster.webp
@@ -4313,8 +4313,8 @@ a23af192e83b281400df23aa66ed6e8349bf4fdb7fc544b8255f5a6cd62ab35c  menu-demo/asse
 ca55fb3278790f5186d0574ee052abb2a5aa22974d7d0d60e272f0ab4a0b7d02  menu-demo/assets/items/sundae/table/atlas-hi.webp
 13343ccca9e9b866450b24210818961ca622d9517399797c1b82f16a768f4177  menu-demo/assets/items/sundae/table/atlas-lo.webp
 1b4350dafc9c83791208b8b1b893cf29df3ad685c69ac600409ae8d821894abc  menu-demo/assets/items/sundae/table/atlas-poster.webp
-799ebfb61383a9753de8f59641bfd4cbd62b3a431ded45e034b191350489330a  menu-demo/credits-3d.html
-143b9fbf4508414cf78029309ea0b511632b4bd4769ae061cdca023482373705  menu-demo/data/demo.json
+91a2dc395f8621795598b11a288ecc9ab380860bbd510324d3bd841f2a368e0b  menu-demo/credits-3d.html
+452615880fde740b059ced1d75acf0c486029bbb81662148fa1d77f26eea5d88  menu-demo/data/demo.json
 3b8d7183115d58f363a112f6a0797aa917fc7f2724eac809df960790c1e582fb  menu-demo/index.html
 a325361f07d0b11c1b5972161f93e373999d97bfa886d554169416977bd29620  menu-demo/preview-worker.js
 a552e300f5de5441caef3e00a58253893be47a9367a0c3941ff449eee72e7b3e  og.png
